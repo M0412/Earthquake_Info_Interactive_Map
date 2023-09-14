@@ -63,31 +63,31 @@ function createMap(earthquakes) {
 
     // Add a tile layer
     let grayscale = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
 
     // Create our map, giving it the grayscale and earthquakes layers to display on load
     var myMap = L.map("map", {
-        center: [
-          37.09, -95.71
-        ],
-        zoom: 10,
+        center: [37.09, -95.71],
+        zoom: 5,
         layers: [grayscale, earthquakes]
     });
 
     // Add legend
     var legend = L.control({position: "bottomright"});
     legend.onAdd = function() {
-    var div = L.DomUtil.create("div", "info legend"),
-    depth = [-10, 10, 30, 50, 70, 90];
-
-    div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
-
-    for (var i = 0; i < depth.length; i++) {
-      div.innerHTML +=
-      '<i style="background:' + chooseColor(depth[i] + 1) + '"></i> ' + depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
-    }
-    return div;
+        var div = L.DomUtil.create("div", "info legend"),
+        depth = [-10, 10, 30, 50, 70, 90];
+        
+        div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
+        
+        for (var i = 0; i < depth.length; i++) {
+            div.innerHTML +=
+            '<i style="background:' + chooseColor(depth[i] + 1) + '"></i> ' + depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
+        }
+        
+        return div;
     };
+    
     legend.addTo(myMap)
 };
