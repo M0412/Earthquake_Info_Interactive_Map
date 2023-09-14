@@ -13,17 +13,17 @@ d3.json(URL).then(function(data){
 
 // Define a markerSize function that will give each earthquake a different radius based on its magnitude
 function markerSize(magnitude) {
-  return Math.sqrt(magnitude) * 10;
+  return Math.sqrt(magnitude) * 5;
 };
 
 // Define a chooseColor function that will give each earthquake a different color based on its depth
 function chooseColor(depth){
-    if (depth < 10) return "greenyellow";
-    else if (depth < 30) return "yellowgreen";
+    if (depth < 10) return "green";
+    else if (depth < 30) return "greenyellow";
     else if (depth < 50) return "yellow";
     else if (depth < 70) return "orange";
     else if (depth < 90) return "orangered";
-    else return "red";
+    else return "black";
 };
 
 // Create a createFeatures function
@@ -36,7 +36,7 @@ function createFeatures(earthquakeData) {
 
     // Create a createCircleMarker function 
     function createCircleMarker(feature,latlng){
-        let markers = {
+        let options = {
             radius:markerSize(feature.properties.mag),
             fillColor: chooseColor(feature.geometry.coordinates[2]),
             color: "black",
@@ -48,13 +48,14 @@ function createFeatures(earthquakeData) {
         return L.circleMarker(latlng, markers);
     };
     
-    // Creating a GeoJSON layer with the retrieved data 
+    // Create a GeoJSON layer that contains the features array in the earthquakeData object.
+    // Run the onEachFeature function once for each piece of data in the array.
     let earthquakes = L.geoJSON(earthquakeData, {
         onEachFeature: onEachFeature,
         pointToLayer: createCircleMarker
     });
       
-    // Send earthquakes layer to the createMap function
+    // Call createMap function and pass earthquakes layer as an argument
     createMap(earthquakes);
 };
 
@@ -78,16 +79,17 @@ function createMap(earthquakes) {
     // Add legend
     var legend = L.control({position: "bottomright"});
     legend.onAdd = function() {
-    var div = L.DomUtil.create("div", "info legend"),
-    depth = [-10, 10, 30, 50, 70, 90];
+        var div = L.DomUtil.create("div", "info legend"),
+        depth = [-10, 10, 30, 50, 70, 90];
 
-    div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
+        div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
 
-    for (var i = 0; i < depth.length; i++) {
-      div.innerHTML +=
-      '<i style="background:' + chooseColor(depth[i] + 1) + '"></i> ' + depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
-    }
-    return div;
+        for (var i = 0; i < depth.length; i++) {
+        div.innerHTML +=
+        '<i style="background:' + chooseColor(depth[i] + 1) + '"></i> ' + depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
+        }
+        return div;
     };
+
     legend.addTo(myMap)
 };
