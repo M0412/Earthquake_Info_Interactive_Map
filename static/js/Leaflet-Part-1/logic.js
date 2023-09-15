@@ -13,7 +13,11 @@ d3.json(URL).then(function(data){
 
 // Define a markerSize function that will give each earthquake a different radius based on its magnitude
 function markerSize(magnitude) {
-  return Math.sqrt(magnitude) * 10;
+    if (magnitude === 0) {
+      return 1;
+    }
+  
+    return magnitude * 4;
 };
 
 // Define a chooseColor function that will give each earthquake a different color based on its depth
@@ -29,9 +33,10 @@ function chooseColor(depth){
 // Create a createFeatures function
 function createFeatures(earthquakeData) {
 
-    // This is called on each feature, giving each feature a popup with information on each earthquake
+    //  Binding a popup to each layer
     function onEachFeature(feature, layer) {
-    layer.bindPopup(`<h3>Location: ${feature.properties.place}</h3><hr><p>Date: ${new Date(feature.properties.time)}</p><p>Magnitude: ${feature.properties.mag}</p><p>Depth: ${feature.geometry.coordinates[2]}</p>`);
+    //layer.bindPopup(`<h3>Location: ${feature.properties.place}</h3><hr><p>Date: ${new Date(feature.properties.time)}</p><p>Magnitude: ${feature.properties.mag}</p><p>Depth: ${feature.geometry.coordinates[2]}</p>`);
+    layer.bindPopup(`<h3>Location: ${feature.properties.place}</h3><hr><p>Magnitude: ${feature.properties.mag}</p><p>Depth: ${feature.geometry.coordinates[2]}</p>`);
     };
 
     // Create a createCircleMarker function 
@@ -73,7 +78,7 @@ function createMap(earthquakes) {
         layers: [grayscale, earthquakes]
     });
 
-    // Add legend
+    // Add a legend to display information about our map
     var legend = L.control({position: "bottomright"});
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend"),
