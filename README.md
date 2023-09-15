@@ -1,12 +1,12 @@
 # leaflet-challenge
 
-### This project is about developing a way to visualize USGS earthquake data that is collected from all over the world each day, that will allow them to better educate the public and other government organizations (and hopefully secure more funding) on issues facing our planet. Tools used in this project are:
+#### This project is about developing a way to visualize USGS earthquake data that is collected from all over the world each day, that will allow them to better educate the public and other government organizations (and hopefully secure more funding) on issues facing our planet. Tools used in this project are:
 - JavaScript
 - css
 - HTML
 
 ![Alt text](images/earthquakemap.png)
-### The following tasks have been accomplished:
+#### The following tasks have been accomplished:
 - Visit the USGS GeoJSON page and choose a dataset to visualize.
 - Use the URL of this JSON to pull in the data for the visualization.
 - Import and visualize the data by doing the following:
