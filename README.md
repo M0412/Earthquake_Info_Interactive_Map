@@ -1,4 +1,4 @@
-# leaflet-challenge
+# Earthquake Information Interactive Map
 
 #### This project is about developing a way to visualize USGS earthquake data that is collected from all over the world each day, that will allow them to better educate the public and other government organizations (and hopefully secure more funding) on issues facing our planet. Tools used in this project are:
 - JavaScript
